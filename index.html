@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pożycz i Wymień</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pożycz i Wymień</h1>
+    
+    <!-- Formularz dodawania ogłoszenia -->
+    <form id="addItemForm">
+      <input type="text" id="name" placeholder="Twoje imię" required />
+      <select id="type" required>
+        <option value="">Wybierz typ ogłoszenia</option>
+        <option value="offer">Oferuję</option>
+        <option value="request">Potrzebuję</option>
+      </select>
+      <input type="text" id="contact" placeholder="Kontakt (email/telefon)" required />
+      <textarea id="description" placeholder="Opis" required></textarea>
+      <button type="submit">Dodaj ogłoszenie</button>
+    </form>
+    
+    <h2>Ogłoszenia:</h2>
+    <div id="itemsList"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
