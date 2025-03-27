@@ -1,0 +1,68 @@
+// Funkcja do pobierania ogłoszeń z LocalStorage
+function getItems() {
+  const items = JSON.parse(localStorage.getItem('items')) || [];
+  return items;
+}
+
+// Funkcja do zapisania ogłoszeń w LocalStorage
+function saveItems(items) {
+  localStorage.setItem('items', JSON.stringify(items));
+}
+
+// Funkcja do wyświetlania ogłoszeń
+function displayItems() {
+  const items = getItems();
+  const itemsList = document.getElementById('itemsList');
+  itemsList.innerHTML = '';
+
+  items.forEach(item => {
+    const itemElement = document.createElement('div');
+    itemElement.classList.add('item');
+    itemElement.innerHTML = `
+      <strong>${item.name}</strong> (${item.type === 'offer' ? 'Oferuję' : 'Potrzebuję'})
+      <p>${item.description}</p>
+      <p><strong>Kontakt:</strong> ${item.contact}</p>
+    `;
+    itemsList.appendChild(itemElement);
+  });
+}
+
+// Funkcja obsługująca dodanie ogłoszenia
+document.getElementById('addItemForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Pobieranie danych z formularza
+  const name = document.getElementById('name').value;
+  const type = document.getElementById('type').value;
+  const contact = document.getElementById('contact').value;
+  const description = document.getElementById('description').value;
+
+  if (!name || !type || !contact || !description) {
+    alert('Wszystkie pola są wymagane!');
+    return;
+  }
+
+  // Tworzenie nowego ogłoszenia
+  const newItem = {
+    name,
+    type,
+    contact,
+    description
+  };
+
+  // Pobieranie dotychczasowych ogłoszeń i dodanie nowego
+  const items = getItems();
+  items.push(newItem);
+  
+  // Zapisanie zaktualizowanej listy ogłoszeń w LocalStorage
+  saveItems(items);
+  
+  // Resetowanie formularza
+  document.getElementById('addItemForm').reset();
+  
+  // Ponowne wyświetlenie ogłoszeń
+  displayItems();
+});
+
+// Wyświetlanie ogłoszeń po załadowaniu strony
+document.addEventListener('DOMContentLoaded', displayItems);
